@@ -11,5 +11,4 @@ COPY app/docker/php/conf.d/prod.ini /usr/local/etc/php/conf.d/99-prod.ini
 WORKDIR /var/www/app
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-ENTRYPOINT ["php"]
-CMD ["-v"]
+CMD ["php", "-v"]
