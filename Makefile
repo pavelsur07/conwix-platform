@@ -65,6 +65,10 @@ app-clear:
 # DATABASE
 # -----------------------------------------------------
 
+# Ожидание готовности Postgres (нужно для init)
+db-wait:
+	until $(COMPOSE) exec -T app-postgres pg_isready --timeout=0 --dbname=app ; do sleep 1 ; done
+
 db-migrate:
 	$(COMPOSE) run --rm app-php-cli php bin/console doctrine:migrations:migrate --no-interaction
 
