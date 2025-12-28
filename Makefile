@@ -54,7 +54,7 @@ composer-install:
 # Symfony console
 # Пример: make console cmd="cache:clear"
 console:
-	$(COMPOSE) run --rm app-php-cli bin/console $(cmd)
+	$(COMPOSE) run --rm app-php-cli php bin/console $(cmd)
 
 # Очистка кэшей/логов на хосте (быстро)
 app-clear:
@@ -65,20 +65,17 @@ app-clear:
 # DATABASE
 # -----------------------------------------------------
 
-db-wait:
-	until $(COMPOSE) exec -T app-postgres pg_isready --timeout=0 --dbname=app ; do sleep 1 ; done
-
 db-migrate:
-	$(COMPOSE) run --rm app-php-cli bin/console doctrine:migrations:migrate --no-interaction
+	$(COMPOSE) run --rm app-php-cli php bin/console doctrine:migrations:migrate --no-interaction
 
 db-fixtures:
-	$(COMPOSE) run --rm app-php-cli bin/console doctrine:fixtures:load --no-interaction
+	$(COMPOSE) run --rm app-php-cli php bin/console doctrine:fixtures:load --no-interaction
 
 db-reset:
-	$(COMPOSE) run --rm app-php-cli bin/console doctrine:database:drop --force
-	$(COMPOSE) run --rm app-php-cli bin/console doctrine:database:create
-	$(COMPOSE) run --rm app-php-cli bin/console doctrine:migrations:migrate --no-interaction
-	$(COMPOSE) run --rm app-php-cli bin/console doctrine:fixtures:load --no-interaction
+	$(COMPOSE) run --rm app-php-cli php bin/console doctrine:database:drop --force
+	$(COMPOSE) run --rm app-php-cli php bin/console doctrine:database:create
+	$(COMPOSE) run --rm app-php-cli php bin/console doctrine:migrations:migrate --no-interaction
+	$(COMPOSE) run --rm app-php-cli php bin/console doctrine:fixtures:load --no-interaction
 
 
 # -----------------------------------------------------
