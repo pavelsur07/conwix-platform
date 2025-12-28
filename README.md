@@ -60,3 +60,20 @@ app/assets/react/*
 
 Этот репозиторий относится **только к проекту Conwix**.  
 Контекст других проектов и брендов **не применяется**.
+
+## DEV quick start
+
+```bash
+make up
+make composer-install
+make console cmd="about"
+curl -i http://conwix.local/
+curl -i http://conwix.local/health
+
+
+## 3) Проверка CI-уровня (локально)
+Одна команда, чтобы убедиться, что “чистый клон” поднимается:
+
+```bash
+make down-clear && make init && make console cmd="debug:router"
+
