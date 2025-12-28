@@ -1,0 +1,33 @@
+{% extends 'ui/layout.html.twig' %}
+{% set title = 'Inbox' %}
+
+{% block content %}
+    <h1>Inbox</h1>
+    <p class="muted">Company: <strong>{{ company.name }}</strong> · {{ company.id }}</p>
+
+    {% if conversations is empty %}
+        <p class="muted">No conversations yet. Send incoming message via /events/incoming-message</p>
+    {% endif %}
+
+    {% for conv in conversations %}
+        <div class="card">
+            <div class="row">
+                <div class="stack">
+                    {% if conv.clientExternalId is defined %}
+                        <strong>{{ conv.clientExternalId }}</strong>
+                    {% elseif conv.client is not null and conv.client.externalId is defined %}
+                        <strong>{{ conv.client.externalId }}</strong>
+                    {% elseif conv.client is not null and conv.client.id is defined %}
+                        <strong>{{ conv.client.id }}</strong>
+                    {% else %}
+                        <strong>{{ conv.id }}</strong>
+                    {% endif %}
+
+                    <span class="muted">{{ conv.id }} · {{ conv.createdAt|date('c') }}</span>
+                </div>
+                <a class="btn btn-primary" href="/ui/companies/{{ company.id }}/conversations/{{ conv.id }}">Open</a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+

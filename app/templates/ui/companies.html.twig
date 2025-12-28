@@ -1,0 +1,22 @@
+{% extends 'ui/layout.html.twig' %}
+{% set title = 'Companies' %}
+
+{% block content %}
+    <h1>Companies</h1>
+    {% if companies is empty %}
+        <p class="muted">No companies yet. Create via API: POST /companies</p>
+    {% endif %}
+
+    {% for c in companies %}
+        <div class="card">
+            <div class="row">
+                <div class="stack">
+                    <strong>{{ c.name }}</strong>
+                    <span class="muted">{{ c.id }} · {{ c.createdAt|date('c') }}</span>
+                </div>
+                <a class="btn btn-primary" href="/ui/companies/{{ c.id }}/inbox">Open inbox</a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+

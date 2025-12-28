@@ -138,7 +138,7 @@ Frontend (React):
 - физически остаются в `app/assets/react/<feature>/`.
 
 Подробные правила:
-
+- `docs/decisions/adr-0001-repo-structure.md`
 - `docs/decisions/adr-0002-module-structure.md`
 - `docs/decisions/adr-0003-module-rules.md`
 

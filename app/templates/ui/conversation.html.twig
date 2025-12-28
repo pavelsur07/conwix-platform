@@ -1,0 +1,29 @@
+{% extends 'ui/layout.html.twig' %}
+{% set title = 'Conversation' %}
+
+{% block content %}
+    <h1>Conversation</h1>
+    <p class="muted">
+        Company: <strong>{{ company.name }}</strong><br>
+        Conversation: {{ conversation.id }} · client: {{ conversation.clientExternalId }}
+    </p>
+
+    <div class="card">
+        {% for m in messages %}
+            <div class="msg {{ m.direction == 'out' ? 'msg-out' : 'msg-in' }}">
+                <div>{{ m.text }}</div>
+                <div class="muted" style="font-size:12px; margin-top:6px;">{{ m.createdAt|date('c') }}</div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <form method="post" action="/ui/companies/{{ company.id }}/conversations/{{ conversation.id }}/reply" class="card">
+        <label class="muted">Reply</label>
+        <textarea name="text" placeholder="Type message..."></textarea>
+        <div style="margin-top:10px;">
+            <button class="btn btn-primary" type="submit">Send</button>
+            <a class="btn" href="/ui/companies/{{ company.id }}/inbox">Back</a>
+        </div>
+    </form>
+{% endblock %}
+
