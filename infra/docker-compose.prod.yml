@@ -1,0 +1,25 @@
+services:
+    traefik:
+        command:
+            - --providers.docker=true
+            - --providers.docker.exposedbydefault=false
+            - --entrypoints.web.address=:80
+            - --entrypoints.websecure.address=:443
+            # включишь acme позже (если нужно), без усложнений на старте
+
+    app-php-fpm:
+        build:
+            context: ../app
+            dockerfile: Dockerfile
+            target: php-fpm
+
+    app-php-cli:
+        build:
+            context: ../app
+            dockerfile: Dockerfile
+            target: php-cli
+
+    app-nginx:
+        volumes:
+            # в prod статику можно отдавать из образа, но без усложнений оставляем как есть/или делаем отдельный образ позже
+            - ../app/public:/var/www/app/public:ro

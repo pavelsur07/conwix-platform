@@ -1,0 +1,12 @@
+FROM php:8.4-fpm-alpine
+
+RUN apk add --no-cache \
+    bash icu-dev libzip-dev postgresql-dev git unzip \
+ && docker-php-ext-install intl opcache pdo_pgsql zip
+
+COPY app/docker/php/php.ini /usr/local/etc/php/php.ini
+COPY app/docker/php/conf.d/common.ini /usr/local/etc/php/conf.d/99-common.ini
+COPY app/docker/php/conf.d/prod.ini /usr/local/etc/php/conf.d/99-prod.ini
+
+WORKDIR /var/www/app
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
